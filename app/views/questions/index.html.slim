@@ -8,3 +8,6 @@ p= link_to 'Ask question', new_question_path
   ul
     - @questions.each do |question|
       li =  question.title
+      ol
+        - question.answers.each do |answer|
+          li = answer.body
