@@ -6,6 +6,7 @@ FactoryBot.define do
   factory :question do
     title { 'MyString' }
     body { 'MyText' }
+    author
 
     trait :invalid do
       title { nil }
@@ -14,6 +15,7 @@ FactoryBot.define do
     trait :for_list do
       title
       body { 'Question body' }
+      author
     end
   end
 end
