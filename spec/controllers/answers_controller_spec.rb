@@ -31,7 +31,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-renders question show with new answer form view ' do
         post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }
-        expect(response).to render_template 'questions/show'
+        expect(response).to redirect_to question_path(question)
       end
     end
   end
@@ -43,11 +43,11 @@ RSpec.describe AnswersController, type: :controller do
     context 'Authenticated user, the author of the answer' do
 
       it 'deletes the answer ' do
-        expect { delete :destroy, params: { use_route: 'questions/answers/', id: answer.id } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { id: answer.id } }.to change(Answer, :count).by(-1)
       end
 
       it 'gets questions page after deleting' do
-        delete :destroy, params: { use_route: 'questions/answers/', id: answer.id }
+        delete :destroy, params: { id: answer.id }
         expect(response).to redirect_to questions_path
       end
     end
@@ -56,13 +56,13 @@ RSpec.describe AnswersController, type: :controller do
       before { login(another_user) }
 
       it 'can not delete the answer' do
-        expect { delete :destroy, params: { use_route: 'questions/answers/', id: answer.id } }.to_not change(Answer, :count)
+        expect { delete :destroy, params: { id: answer.id } }.to_not change(Answer, :count)
       end
 
       it 'gets question show page after not deleting' do
-        delete :destroy, params: { use_route: 'questions/answers/', id: answer.id }
+        delete :destroy, params: { id: answer.id }
 
-        expect(response).to render_template 'questions/show'
+        expect(response).to redirect_to question_path(answer.question)
       end
     end
   end

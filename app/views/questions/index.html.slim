@@ -6,8 +6,4 @@ p= link_to 'Ask question', new_question_path
   p 'No questions to show.'
 - else
   ul
-    - @questions.each do |question|
-      li =  question.title
-      ol
-        - question.answers.each do |answer|
-          li = answer.body
+    = render @questions

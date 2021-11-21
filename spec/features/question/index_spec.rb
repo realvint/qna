@@ -7,14 +7,14 @@ feature 'User can see list of questions', "
 " do
 
   describe 'With one or more questions already in data base' do
-    given!(:questions) { create_list(:question, 3, :for_list) }
+    given!(:questions) { create_list :question, 3 }
 
     scenario 'sees a list of questions' do
       visit questions_path
       expect(page).to have_content 'Questions'
 
-      questions.each.with_index(1) do |_question, index|
-        expect(page).to have_content "Question title #{index}"
+      questions.each do |question|
+        expect(page).to have_content question.title
       end
     end
   end
