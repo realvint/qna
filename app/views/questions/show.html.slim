@@ -6,11 +6,11 @@
     p = link_to 'Delete question', question_path(@question), method: :delete
 
   h4 Answers
-
-  - if @question.answers.empty?
-    p No answers to show.
-  - else
-    = render @question.answers
+  .answers
+    - if @question.answers.empty?
+      p No answers to show.
+    - else
+      = render @question.answers
 
   h4 Answer a question
 

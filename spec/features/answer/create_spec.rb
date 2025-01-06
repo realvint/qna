@@ -9,7 +9,7 @@ feature 'Authenticated user can answer a question', "
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
 

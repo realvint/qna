@@ -13,6 +13,7 @@ html
   body
     header.header
       = render 'shared/nav'
-      = render 'shared/flash'
+      .flash
+        = render 'shared/flash'
     main.container
       = yield
