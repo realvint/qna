@@ -1,8 +1,12 @@
 = render 'shared/errors', resource: @question
 
 = form_with model: @question do |f|
-  = f.label :title
-  = f.text_field :title
-  = f.label :body
-  = f.text_area :body
-  = f.submit 'Ask'
+  .card.card-body.mt-4
+    .mb-4
+      = f.label :title, class: "form-label"
+      = f.text_field :title, class: "form-control"
+    .mb-4
+      = f.label :body, class: "form-label"
+      = f.text_area :body, class: "form-control"
+    .mb-2
+      = f.submit 'Ask', class: "btn btn-success"

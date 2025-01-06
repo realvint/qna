@@ -1,5 +1,7 @@
 - if resource&.errors.present?
-  b= "#{resource.errors.count} error(s) detected: "
-  ul
-    -resource.errors.full_messages.each do |message|
-      li= message
+  .alert.alert-danger.alert-dismissible.fade.show role="alert"
+    h4.alert-heading = "#{resource.errors.count} error(s) detected: "
+    ul
+      -resource.errors.full_messages.each do |message|
+        li = message
+    button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"
