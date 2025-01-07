@@ -1,4 +1,4 @@
-.mt-3
+.my-3
   h3 = @question.title
   p = @question.body
 
@@ -6,6 +6,9 @@
     p = link_to 'Delete question', question_path(@question), method: :delete
 
   h4 Answers
+  .answer-errors
+    = render 'shared/errors', resource: @answer
+
   .answers
     - if @question.answers.empty?
       p No answers to show.
@@ -13,5 +16,4 @@
       = render @question.answers
 
   h4 Answer a question
-
   = render 'answers/form', answer: @answer
