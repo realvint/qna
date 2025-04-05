@@ -13,6 +13,7 @@ import "bootstrap/dist/css/bootstrap"
 import "stylesheets/application"
 
 import "./answer"
+import "./question"
 
 Rails.start()
 Turbolinks.start()
