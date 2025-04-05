@@ -16,11 +16,12 @@ feature 'Author can delete his answer', "
       visit question_path(answer.question)
     end
 
-    scenario 'deletes it' do
-      expect(page).to have_content 'My answer'
+    scenario 'deletes it', js: true do
       click_on 'Delete'
-      expect(page).to have_content 'Your answer was deleted.'
-      expect(page).to_not have_content 'My answer'
+
+      accept_alert 'Are you sure?'
+      
+      expect(page).to_not have_content answer.body
     end
   end
 
