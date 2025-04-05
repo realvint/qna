@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit update destroy]
 
   def index
-    @questions = Question.all
+    @questions = Question.order(created_at: :desc)
   end
 
   def show
@@ -29,13 +29,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'Your question was deleted.'
-    else
-      flash[:notice] = 'Action not allowed'
-      render :show
-    end
+    @question.destroy if current_user.author_of?(@question)
   end
 
   private

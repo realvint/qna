@@ -20,7 +20,7 @@ feature 'Author can delete his answer', "
       click_on 'Delete'
 
       accept_alert 'Are you sure?'
-      
+
       expect(page).to_not have_content answer.body
     end
   end

@@ -1,11 +1,11 @@
 .card.card-body.mb-3 id="question-#{question.id}"
   .d-flex.justify-content-between
-    = link_to question.title, question_path(question), method: :get
+    = link_to question.title, question
 
     - if current_user&.author_of?(question)
       div
         => link_to "Edit", "#", class: "edit-question-link", data: { question_id: question.id }
-        = link_to 'Delete', question, method: :delete, data: { confirm: "Are you sure?"}
+        = link_to 'Delete', question, method: :delete, remote: true, data: { confirm: "Are you sure?"}
 
   = form_with model: question, local: false, class: "hidden", html: { id: "edit-question-#{question.id}" } do |f|
     .my-3
