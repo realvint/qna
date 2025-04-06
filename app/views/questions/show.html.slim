@@ -7,10 +7,10 @@
     = render 'shared/errors', resource: @answer
 
   .answers
-    - if @question.answers.empty?
+    - if @answers.empty?
       p No answers to show.
     - else
-      = render @question.answers
+      = render @answers
 
   h4 Answer a question
   = render 'answers/form', answer: @answer

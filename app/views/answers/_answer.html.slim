@@ -2,6 +2,12 @@
   .card.card-body.mb-3 id="answer-#{answer.id}"
     p = answer.body
 
+    - if answer.best
+      p Best answer
+
+    - if current_user&.author_of?(answer.question) && !answer.best
+      p = link_to "Best", set_best_answer_path(answer), method: :post, remote: true
+
     - if current_user&.author_of?(answer)
       p
         => link_to "Edit", "#", class: "edit-answer-link", data: { answer_id: answer.id }
