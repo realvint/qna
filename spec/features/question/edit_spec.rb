@@ -29,7 +29,7 @@ feature "User can edit his question", %q{
 
         expect(page).to_not have_content question.title
         expect(page).to have_content "Edited question"
-        expect(page).to_not have_selector "textfield[name='question[title]']"
+        expect(page).to_not have_selector "input[name='question[title]']"
       end
     end
 
