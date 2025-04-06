@@ -43,4 +43,3 @@ feature 'Author can delete his answer', "
     expect(page).to_not have_link 'Delete'
   end
 end
-
