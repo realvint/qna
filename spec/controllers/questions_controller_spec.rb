@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
+  let(:question) { create(:question, author: user) }
   let(:user) { create(:user) }
-  let(:another_user) { create(:user) }
+  let(:other_user) { create(:user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
@@ -75,6 +75,36 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    before { login(user) }
+
+    context 'with valid attributes' do
+      it "changes question attributes" do
+        patch :update, params: { id: question, question: { title: "new title" } }, format: :js
+        question.reload
+        expect(question.title).to eq "new title"
+      end
+
+      it "renders update template" do
+        patch :update, params: { id: question, question: { title: "new title" } }, format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'with invalid attributes' do
+      it "does not change question attributes" do
+        expect do
+          patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
+        end.to_not change(question, :title)
+      end
+
+      it "renders update template" do
+        patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
+        expect(response).to render_template :update
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     let!(:question) { create(:question, author: user) }
 
@@ -82,26 +112,26 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(user) }
 
       it 'can delete the question ' do
-        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+        expect { delete :destroy, params: { id: question }, format: :js }.to change(Question, :count).by(-1)
       end
 
-      it 'redirects to index after destroy' do
-        delete :destroy, params: { id: question }
-        expect(response).to redirect_to questions_path
+      it 'has no redirects to index after destroy' do
+        delete :destroy, params: { id: question }, format: :js
+        expect(response).to_not redirect_to questions_path
       end
     end
 
     context 'Authenticated user, not author of the question' do
-      before { login(another_user) }
+      before { login(other_user) }
 
       it 'can not delete the question' do
-        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+        expect { delete :destroy, params: { id: question }, format: :js }.to_not change(Question, :count)
       end
 
-      it 'renders question page' do
-        delete :destroy, params: { id: question }
+      it 'no renders question page' do
+        delete :destroy, params: { id: question }, format: :js
 
-        expect(response).to render_template :show
+        expect(response).to_not render_template :show
       end
     end
   end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let(:another_user) { create(:user) }
+  let(:other_user) { create(:user) }
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question, author: user) }
 
@@ -73,26 +73,26 @@ RSpec.describe AnswersController, type: :controller do
     context 'Authenticated user, the author of the answer' do
 
       it 'deletes the answer ' do
-        expect { delete :destroy, params: { id: answer.id } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { id: answer.id }, format: :js }.to change(Answer, :count).by(-1)
       end
 
-      it 'gets questions page after deleting' do
-        delete :destroy, params: { id: answer.id }
-        expect(response).to redirect_to questions_path
+      it 'questions page not refresh after deleting' do
+        delete :destroy, params: { id: answer.id }, format: :js
+        expect(response).to_not redirect_to questions_path
       end
     end
 
     context 'Authenticated user, not author of the answer' do
-      before { login(another_user) }
+      before { login(other_user) }
 
       it 'can not delete the answer' do
-        expect { delete :destroy, params: { id: answer.id } }.to_not change(Answer, :count)
+        expect { delete :destroy, params: { id: answer.id }, format: :js }.to_not change(Answer, :count)
       end
 
-      it 'gets question show page after not deleting' do
-        delete :destroy, params: { id: answer.id }
+      it 'gets question show page not refresh after not deleting' do
+        delete :destroy, params: { id: answer.id }, format: :js
 
-        expect(response).to redirect_to question_path(answer.question)
+        expect(response).to_not redirect_to question_path(answer.question)
       end
     end
   end
