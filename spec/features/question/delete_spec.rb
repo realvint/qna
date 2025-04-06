@@ -6,9 +6,9 @@ feature 'Only author can delete his question', "
   I'd like to be to delete my question
 " do
 
-  given(:user) { create(:user) }
-  given(:question) { create(:question, author: user) }
-  given(:other_user) { create(:user) }
+  given!(:user) { create(:user) }
+  given!(:question) { create(:question, author: user) }
+  given!(:other_user) { create(:user) }
 
   describe 'An author of the question' do
     background do
@@ -21,7 +21,7 @@ feature 'Only author can delete his question', "
 
       accept_alert 'Are you sure?'
 
-      expect(page).to have_content 'Your question was deleted.'
+      expect(page).to_not have_content question.title
     end
   end
 
