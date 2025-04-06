@@ -96,38 +96,4 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
-
-  describe 'POST #set_best' do
-    let!(:other_answer) { create(:answer, question: question, author: other_user) }
-
-    context 'Author of question' do
-      before { login(user) }
-
-      it 'marks the selected answer as best' do
-        post :set_best, params: { id: other_answer.id }, format: :js
-        expect(other_answer.reload).to be_best
-      end
-
-      it 'unmarks previously best answer' do
-        answer.update(best: true)
-        post :set_best, params: { id: other_answer.id }, format: :js
-        expect(answer.reload).to_not be_best
-        expect(other_answer.reload).to be_best
-      end
-
-      it 'renders set_best template' do
-        post :set_best, params: { id: other_answer.id }, format: :js
-        expect(response).to render_template :set_best
-      end
-    end
-
-    context 'Not author of question' do
-      before { login(other_user) }
-
-      it 'does not mark answer as best' do
-        post :set_best, params: { id: other_answer.id }, format: :js
-        expect(other_answer.reload).to_not be_best
-      end
-    end
-  end
 end
