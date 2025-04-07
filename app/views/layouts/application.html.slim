@@ -3,17 +3,17 @@ html
   head
     title QNA
 
-    meta[name='viewport' content='width=device-width,initial-scale=1']
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
     = csrf_meta_tags
     = csp_meta_tag
 
-    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', "data-turbolinks-track": 'reload'
+    = stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload"
+    = javascript_pack_tag "application", "data-turbolinks-track": "reload"
 
   body
     header.header
-      = render 'shared/nav'
+      = render "shared/nav"
       .flash
-        = render 'shared/flash'
+        = render "shared/flash"
     main.container
       = yield

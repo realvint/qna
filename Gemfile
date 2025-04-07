@@ -38,6 +38,7 @@ group :development do
   gem "rubocop-rails", "2.30.3"
   gem "rubocop-rspec", "3.5.0"
   gem "rubocop-rspec_rails", "2.31.0"
+  gem "slim_lint"
   gem "spring", "4.2.1"
   gem "spring-watcher-listen", "2.1.0"
   gem "web-console", "4.2.1"
