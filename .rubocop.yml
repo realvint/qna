@@ -1,4 +1,4 @@
-require:
+plugins:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-rails
@@ -72,4 +72,7 @@ Capybara/ClickLinkOrButtonStyle:
   Enabled: false
 
 Capybara/SpecificMatcher:
+  Enabled: false
+
+Capybara/NegationMatcherAfterVisit:
   Enabled: false
