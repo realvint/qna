@@ -35,7 +35,8 @@ feature "Visitor can sign up", "
       visit new_user_registration_path
       click_button "Sign up"
 
-      expect(page).to have_content "Email can't be blank Password can't be blank"
+      expect(page).to have_content "Email can't be blank"
+      expect(page).to have_content "Password can't be blank"
     end
 
     scenario "wrong password" do

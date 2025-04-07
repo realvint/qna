@@ -6,7 +6,7 @@
       p.text-center.text-secondary.fs-3 Login page
 
       = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-        .mb-3
+        .mb-4
           = f.text_field :email, class: "form-control", placeholder: "Email"
         .mb-3
           = f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Password"
