@@ -1,11 +1,15 @@
-class Answers::BestController < ApplicationController
-  before_action :authenticate_user!
+# frozen_string_literal: true
 
-  def create
-    answer = Answer.find(params[:answer_id])
-    question = answer.question
+module Answers
+  class BestController < ApplicationController
+    before_action :authenticate_user!
 
-    answer.mark_as_best if current_user.author_of?(question)
-    @answers =  question.answers.sort_by_best
+    def create
+      answer = Answer.find(params[:answer_id])
+      question = answer.question
+
+      answer.mark_as_best if current_user.author_of?(question)
+      @answers = question.answers.sort_by_best
+    end
   end
 end

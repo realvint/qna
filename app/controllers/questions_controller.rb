@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[show edit update destroy]
+  before_action :set_question, only: %i[show update destroy]
 
   def index
     @questions = Question.order(created_at: :desc)
@@ -19,7 +21,7 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new(question_params)
 
     if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
+      redirect_to @question, notice: "Your question successfully created."
     else
       render :new
     end

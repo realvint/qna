@@ -1,11 +1,12 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-feature "User can edit his question", %q{
+require "rails_helper"
+
+feature "User can edit his question", "
   In order to correct mistakes
   As an author of question
   I'd like to be able to edit my question
-  } do
-
+  " do
   given!(:user) { create(:user) }
   given!(:other_user) { create(:user) }
   given!(:question) { create(:question, author: user) }
@@ -13,10 +14,10 @@ feature "User can edit his question", %q{
   scenario "Unauthenticated user can not edit answer" do
     visit questions_path
 
-    expect(page).to_not have_link "Edit"
+    expect(page).to have_no_link "Edit"
   end
 
-  describe "Authenticated user", js: true do
+  describe "Authenticated user", :js do
     scenario "edits his question" do
       sign_in(user)
       visit questions_path
@@ -27,9 +28,9 @@ feature "User can edit his question", %q{
         fill_in "Title", with: "Edited question"
         click_on "Save"
 
-        expect(page).to_not have_content question.title
+        expect(page).to have_no_content question.title
         expect(page).to have_content "Edited question"
-        expect(page).to_not have_selector "input[name='question[title]']"
+        expect(page).to have_no_css "input[name='question[title]']"
       end
     end
 
@@ -43,7 +44,7 @@ feature "User can edit his question", %q{
       within "#question-#{question.id}" do
         fill_in "Title", with: ""
         click_on "Save"
-        end
+      end
       expect(page).to have_content "Title can't be blank"
     end
 
@@ -52,7 +53,7 @@ feature "User can edit his question", %q{
 
       visit questions_path
 
-      expect(page).to_not have_link "Edit"
+      expect(page).to have_no_link "Edit"
     end
   end
 end
