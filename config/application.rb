@@ -15,7 +15,7 @@ module Qna
 
     config.time_zone = "Moscow"
     config.location = "Europe/Moscow"
-    config.i18n.default_locale = :ru
+    config.i18n.default_locale = :en
 
     config.generators do |g|
       g.test_framework :rspec,
