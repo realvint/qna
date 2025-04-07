@@ -1,16 +1,16 @@
-h1= @question.title
-p= @question.body
+.my-3
+  h3 = @question.title
+  p = @question.body
 
-- if current_user&.author_of?(@question)
-  p= link_to 'Delete question', question_path(@question), method: :delete
+  h4 Answers
+  .answer-errors
+    = render 'shared/errors', resource: @answer
 
-h3 Answers
+  .answers
+    - if @answers.empty?
+      p No answers to show.
+    - else
+      = render @answers
 
-- if @question.answers.empty?
-  p No answers to show.
-- else
-  = render @question.answers
-
-h3 Answer a question
-
-= render 'answers/form', answer: @answer
+  h4 Answer a question
+  = render 'answers/form', answer: @answer

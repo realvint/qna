@@ -1,5 +1,21 @@
 - if answer.persisted?
-  p = answer.body
+  .card.card-body.mb-3 id="answer-#{answer.id}"
+    p = answer.body
 
-  - if current_user&.author_of?(answer)
-    p = link_to 'Delete answer', answer_path(answer), method: :delete
+    - if answer.best
+      p Best answer
+
+    - if current_user&.author_of?(answer.question) && !answer.best
+      p = link_to "Best", answer_best_path(answer), method: :post, remote: true
+
+    - if current_user&.author_of?(answer)
+      p
+        => link_to "Edit", "#", class: "edit-answer-link", data: { answer_id: answer.id }
+        = link_to "Delete", answer, method: :delete, remote: true, data: { confirm: "Are you sure?" }
+
+    = form_with model: answer, local: false, class: "hidden", html: { id: "edit-answer-#{answer.id}" } do |f|
+      .mb-3
+        = f.label :body, "Your answer", class: "form-label"
+        = f.text_area :body, class: "form-control"
+
+      = f.submit "Save", class: "btn btn-success"

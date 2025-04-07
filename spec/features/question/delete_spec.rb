@@ -6,27 +6,29 @@ feature 'Only author can delete his question', "
   I'd like to be to delete my question
 " do
 
-  given(:user) { create(:user) }
-  given(:question) { create(:question, author: user) }
-  given(:another_user) { create(:user) }
+  given!(:user) { create(:user) }
+  given!(:question) { create(:question, author: user) }
+  given!(:other_user) { create(:user) }
 
   describe 'An author of the question' do
     background do
       sign_in(user)
-      visit question_path(question)
+      visit questions_path
     end
 
-    scenario 'deletes it' do
-      click_on 'Delete question'
+    scenario 'deletes it', js: true do
+      click_on 'Delete'
 
-      expect(page).to have_content 'Your question was deleted.'
+      accept_alert 'Are you sure?'
+
+      expect(page).to_not have_content question.title
     end
   end
 
   describe 'Not an author of the question' do
     background do
-      sign_in(another_user)
-      visit question_path(question)
+      sign_in(other_user)
+      visit questions_path
     end
 
     scenario 'cannot delete a question' do
@@ -35,7 +37,7 @@ feature 'Only author can delete his question', "
   end
 
   scenario 'Unauthenticated user cannot delete question' do
-    visit question_path(question)
+    visit questions_path
 
     expect(page).to_not have_content 'Delete'
   end

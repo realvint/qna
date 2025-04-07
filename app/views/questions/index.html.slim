@@ -1,9 +1,11 @@
 h1 Questions
 
+.question-errors
+  = render 'shared/errors', resource: @question
+
 p= link_to 'Ask question', new_question_path
 
 - if @questions.empty?
   p 'No questions to show.'
 - else
-  ul
-    = render @questions
+  = render @questions

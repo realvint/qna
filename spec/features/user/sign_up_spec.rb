@@ -15,7 +15,7 @@ feature 'Visitor can sign up', "
       fill_in 'Email', with: 'email@test.com'
       fill_in 'Password', with: '12345678'
       fill_in 'Password confirmation', with: '12345678'
-      click_on 'Sign up'
+      click_button 'Sign up'
 
       expect(page).to have_content 'Welcome! You have signed up successfully.'
     end
@@ -24,7 +24,7 @@ feature 'Visitor can sign up', "
       visit new_user_registration_path
       fill_in 'Email', with: user.email
       fill_in 'Password', with: user.password
-      click_on 'Sign up'
+      click_button 'Sign up'
 
       expect(page).to have_content 'Email has already been taken'
     end
@@ -33,7 +33,7 @@ feature 'Visitor can sign up', "
   describe 'Registration with invalid' do
     scenario 'empty data' do
       visit new_user_registration_path
-      click_on 'Sign up'
+      click_button 'Sign up'
 
       expect(page).to have_content "Email can't be blank Password can't be blank"
     end
@@ -42,7 +42,7 @@ feature 'Visitor can sign up', "
       visit new_user_registration_path
       fill_in 'Email', with: 'email@test.com'
       fill_in 'Password', with: '12345678'
-      click_on 'Sign up'
+      click_button 'Sign up'
 
       expect(page).to have_content "Password confirmation doesn't match Password"
     end

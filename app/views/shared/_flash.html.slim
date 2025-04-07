@@ -1,0 +1,4 @@
+- flash.each do |type, msg|
+  #alert class="alert #{bootstrap_class_for_flash(type)} alert-dismissible text-center rounded-0" role="alert"
+    = msg
+    button.btn-close type="button" data-bs-dismiss="alert" aria-label="Close"

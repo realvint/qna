@@ -16,11 +16,12 @@ feature 'Author can delete his answer', "
       visit question_path(answer.question)
     end
 
-    scenario 'deletes it' do
-      expect(page).to have_content 'My answer'
-      click_on 'Delete answer'
-      expect(page).to have_content 'Your answer was deleted.'
-      expect(page).to_not have_content 'My answer'
+    scenario 'deletes it', js: true do
+      click_on 'Delete'
+
+      accept_alert 'Are you sure?'
+
+      expect(page).to_not have_content answer.body
     end
   end
 
@@ -32,14 +33,13 @@ feature 'Author can delete his answer', "
 
     scenario 'cannot delete an answer' do
       expect(page).to have_content 'My answer'
-      expect(page).to_not have_link 'Delete answer'
+      expect(page).to_not have_link 'Delete'
     end
   end
 
   scenario 'Unauthenticated user cannot delete answers' do
     visit question_path(answer.question)
     expect(page).to have_content 'My answer'
-    expect(page).to_not have_link 'Delete answer'
+    expect(page).to_not have_link 'Delete'
   end
 end
-
