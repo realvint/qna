@@ -4,7 +4,7 @@
 
   h4 Answers
   .answer-errors
-    = render 'shared/errors', resource: @answer
+    = render "shared/errors", resource: @answer
 
   .answers
     - if @answers.empty?
@@ -13,4 +13,4 @@
       = render @answers
 
   h4 Answer a question
-  = render 'answers/form', answer: @answer
+  = render "answers/form", answer: @answer

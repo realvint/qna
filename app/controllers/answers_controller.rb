@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!
   before_action :set_answer, only: %i[update destroy]
 
   def create
@@ -7,21 +9,21 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.author = current_user
 
-    if @answer.save
-      flash.now[:notice] = 'Your answer successfully created.'
-    end
+    return unless @answer.save
+
+    flash.now[:notice] = "Your answer successfully created."
   end
 
   def update
     @answer.update(answer_params)
     question = @answer.question
-    @answers =  question.answers.sort_by_best
+    @answers = question.answers.sort_by_best
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy
-    end
+    return unless current_user.author_of?(@answer)
+
+    @answer.destroy
   end
 
   private

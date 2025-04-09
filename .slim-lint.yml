@@ -1,0 +1,31 @@
+skip_frontmatter: false
+
+linters:
+  CommentControlStatement:
+    enabled: false
+
+  ConsecutiveControlStatements:
+    enabled: false
+    max_consecutive: 3
+
+  ControlStatementSpacing:
+    enabled: true
+
+  EmptyControlStatement:
+    enabled: true
+
+  EmptyLines:
+    enabled: true
+
+  LineLength:
+    enabled: true
+    max: 200
+
+  RedundantDiv:
+    enabled: true
+
+  TrailingBlankLines:
+    enabled: true
+
+  TrailingWhitespace:
+    enabled: true

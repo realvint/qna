@@ -1,11 +1,12 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-feature 'Authenticated user can sign out', '
+require "rails_helper"
+
+feature "Authenticated user can sign out", '
   In order to finish my session
   As an authenticated user
   I can sign out
 ' do
-
   given(:user) { create(:user) }
 
   background do
@@ -13,8 +14,8 @@ feature 'Authenticated user can sign out', '
     visit root_path
   end
 
-  scenario 'Authenticated user tries to sign out' do
-    click_on 'Sign out'
-    expect(page).to have_content 'Signed out successfully.'
+  scenario "Authenticated user tries to sign out" do
+    click_on "Sign out"
+    expect(page).to have_content "Signed out successfully."
   end
 end

@@ -1,24 +1,47 @@
-# README
+# Thinknetica QNA Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Software versions:
+* Ruby 3.3.7
+* Rails 6.1.7 (with webpacker 5)
+* PostgreSQL
+* Node JS 16
+* Yarn 1.22
 
-Things you may want to cover:
+### Start project
+1. Set up local environment (Ruby, etc.)
+2. Download or clone a repository
+3. Run bundler and yarn to install required gems and dependencies
 
-* Ruby version
+```bash
+$ bundle install
+$ yarn
+```
 
-* System dependencies
+If necessary, you can run PostgreSQL and Redis locally using [Docker](https://docker.com)
 
-* Configuration
+Make sure you are using [Docker Compose V2](https://docs.docker.com/compose/#compose-v2-and-the-new-docker-compose-command)
 
-* Database creation
+```
+% docker compose version
+Docker Compose version v2.3.3
+```
 
-* Database initialization
+`docker-compose.yml` configured to run PostgreSQL
 
-* How to run the test suite
+```bash
+$ docker compose up -d
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+4. Create and set up a database for the project
 
-* Deployment instructions
+```bash
+$ rails db:prepare
+```
 
-* ...
+5. Start project with foreman gem (project include webpacker)
+
+```bash
+$ bin/dev
+```
+
+### The project is available at the link http://localhost:3000/
