@@ -24,6 +24,19 @@ feature "Only author can delete his question", "
 
       expect(page).to have_no_content question.title
     end
+
+    scenario "can delete attached file", :js do
+      question.files.attach(io: File.open(Rails.root.join("spec/rails_helper.rb").to_s), filename: "rails_helper.rb")
+
+      visit question_path(question)
+
+      expect(page).to have_link "rails_helper.rb"
+      expect(page).to have_link "Delete file"
+
+      click_on "Delete file"
+
+      expect(page).to have_no_link "rails_helper.rb"
+    end
   end
 
   describe "Not an author of the question" do
@@ -33,13 +46,19 @@ feature "Only author can delete his question", "
     end
 
     scenario "cannot delete a question" do
-      expect(page).to have_no_content "Delete"
+      question.files.attach(io: File.open(Rails.root.join("spec/rails_helper.rb").to_s), filename: "rails_helper.rb")
+
+      expect(page).to have_no_link "Delete"
+    end
+
+    scenario "cannot delete attached file" do
+      expect(page).to have_no_link "Delete file"
     end
   end
 
   scenario "Unauthenticated user cannot delete question" do
     visit questions_path
 
-    expect(page).to have_no_content "Delete"
+    expect(page).to have_no_link "Delete"
   end
 end

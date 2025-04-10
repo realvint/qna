@@ -8,5 +8,9 @@ Rails.application.routes.draw do
     resources :answers, shallow: true, only: %i[create update destroy] do
       resource :best, only: :create, module: :answers, controller: "best"
     end
+
+    member do
+      delete :delete_file
+    end
   end
 end
