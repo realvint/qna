@@ -9,4 +9,8 @@ RSpec.describe Question do
 
   it { is_expected.to validate_presence_of :title }
   it { is_expected.to validate_presence_of :body }
+
+  it "have one attached file" do
+    expect(described_class.new.file).to be_an_instance_of(ActiveStorage::Attached::One)
+  end
 end
