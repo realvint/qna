@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   resources :questions, except: %i[edit] do
     resources :answers, shallow: true, only: %i[create update destroy] do
       resource :best, only: :create, module: :answers, controller: "best"
+
+      member do
+        delete :delete_file
+      end
     end
 
     member do
