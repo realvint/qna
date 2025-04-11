@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+class AttachmentsController < ApplicationController
+  before_action :authenticate_user!
+
+  def destroy
+    @attachment = ActiveStorage::Attachment.find(params[:id])
+
+    if current_user.author_of?(@attachment.record)
+      @attachment.purge
+    else
+      head :forbidden
+    end
+  end
+end

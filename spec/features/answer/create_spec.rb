@@ -25,10 +25,20 @@ feature "Authenticated user can answer a question", "
       expect(page).to have_content "My new answer"
     end
 
-    scenario "answers a a question with errors" do
+    scenario "answers a question with errors" do
       click_on "Answer"
 
       expect(page).to have_content "Body can't be blank"
+    end
+
+    scenario "answer a question with attached files" do
+      fill_in "Body", with: "text text text"
+
+      attach_file "File", %W[#{Rails.root.join("spec/rails_helper.rb")} #{Rails.root.join("spec/spec_helper.rb")}]
+      click_on "Answer"
+
+      expect(page).to have_link "rails_helper.rb"
+      expect(page).to have_link "spec_helper.rb"
     end
   end
 

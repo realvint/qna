@@ -9,4 +9,6 @@ Rails.application.routes.draw do
       resource :best, only: :create, module: :answers, controller: "best"
     end
   end
+
+  resources :attachments, only: :destroy
 end

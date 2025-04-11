@@ -49,6 +49,27 @@ feature "User can edit his answer", "
       expect(page).to have_content "Body can't be blank"
     end
 
+    scenario "edits his answer and attach files" do
+      sign_in(user)
+      visit question_path(question)
+
+      click_on "Edit"
+
+      within ".answers" do
+        fill_in "Your answer", with: "Edited answer"
+
+        attach_file "File", %W[#{Rails.root.join("spec/rails_helper.rb")} #{Rails.root.join("spec/spec_helper.rb")}]
+
+        click_on "Save"
+
+        expect(page).to have_no_content answer.body
+        expect(page).to have_content "Edited answer"
+        expect(page).to have_no_css "textarea[name='answer[body]']"
+        expect(page).to have_link "rails_helper.rb"
+        expect(page).to have_link "spec_helper.rb"
+      end
+    end
+
     scenario "tries to edit other user's answer" do
       sign_in(other_user)
 
