@@ -4,11 +4,11 @@
 
     - if answer.files.attached?
       - answer.files.each do |file|
-        p id="answer-file-#{file.id}"
+        p id="file-#{file.id}"
           => link_to file.filename.to_s, url_for(file)
 
           - if current_user&.author_of?(answer)
-            = link_to "Delete file", delete_file_answer_path(answer, file_id: file.id), method: :delete, remote: true
+            = link_to "Delete file", attachment_path(file), method: :delete, remote: true
 
     - if answer.best
       p Best answer

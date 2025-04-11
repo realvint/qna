@@ -2,7 +2,7 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_answer, only: %i[update destroy delete_file]
+  before_action :set_answer, only: %i[update destroy]
 
   def create
     @question = Question.find(params[:question_id])
@@ -24,13 +24,6 @@ class AnswersController < ApplicationController
     return unless current_user.author_of?(@answer)
 
     @answer.destroy
-  end
-
-  def delete_file
-    return head :forbidden unless current_user.author_of?(@answer)
-
-    @file = @answer.files.find(params[:file_id])
-    @file.purge
   end
 
   private
