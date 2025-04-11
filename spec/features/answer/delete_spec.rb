@@ -11,18 +11,31 @@ feature "Author can delete his answer", "
   given(:other_user) { create(:user) }
   given(:answer) { create(:answer, author: user) }
 
-  describe "An author of the answer" do
+  background do
+    answer.files.attach(io: File.open(Rails.root.join("spec/rails_helper.rb").to_s), filename: "rails_helper.rb")
+  end
+
+  describe "An author of the answer", :js do
     background do
       sign_in(user)
       visit question_path(answer.question)
     end
 
-    scenario "deletes it", :js do
+    scenario "deletes it" do
       click_on "Delete"
 
       accept_alert "Are you sure?"
 
       expect(page).to have_no_content answer.body
+    end
+
+    scenario "can delete attached file" do
+      expect(page).to have_link "rails_helper.rb"
+      expect(page).to have_link "Delete file"
+
+      click_on "Delete file"
+
+      expect(page).to have_no_link "rails_helper.rb"
     end
   end
 
@@ -36,10 +49,16 @@ feature "Author can delete his answer", "
       expect(page).to have_content "My answer"
       expect(page).to have_no_link "Delete"
     end
+
+    scenario "cannot delete attached file" do
+      expect(page).to have_link "rails_helper.rb"
+      expect(page).to have_no_link "Delete file"
+    end
   end
 
   scenario "Unauthenticated user cannot delete answers" do
     visit question_path(answer.question)
+
     expect(page).to have_content "My answer"
     expect(page).to have_no_link "Delete"
   end

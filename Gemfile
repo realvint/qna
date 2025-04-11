@@ -7,6 +7,7 @@ gem "rails", "6.1.7.10"
 
 # a b c d e f g h i j k l m n o p q r s t u v w x y z
 
+gem "aws-sdk-s3"
 gem "bigdecimal", "3.1.9"
 gem "bootsnap", "1.18.4", require: false
 gem "concurrent-ruby", "1.3.4"
