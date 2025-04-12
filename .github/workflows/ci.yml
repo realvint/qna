@@ -10,6 +10,25 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16.0-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: qna_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://postgres:postgres@localhost:5432/qna_test"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,8 +39,8 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Set up database schema
-        run: bin/rails db:schema:load
+      - name: Set up database
+        run: bin/rails db:prepare
 
       - name: Run tests
         run: bundle exec rspec
