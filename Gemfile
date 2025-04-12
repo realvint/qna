@@ -24,6 +24,7 @@ gem "rails-i18n", "7.0.10"
 gem "sass-rails", "6.0.0"
 gem "slim-rails", "3.7.0"
 gem "turbolinks", "5.2.1"
+gem "valid_url", "0.0.4"
 gem "webpacker", "5.4.4"
 
 group :development, :test do

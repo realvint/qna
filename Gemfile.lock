@@ -360,6 +360,9 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
+    valid_url (0.0.4)
+      addressable
+      rails
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -429,6 +432,7 @@ DEPENDENCIES
   spring (= 4.2.1)
   spring-watcher-listen (= 2.1.0)
   turbolinks (= 5.2.1)
+  valid_url (= 0.0.4)
   web-console (= 4.2.1)
   webdrivers (= 5.3.1)
   webpacker (= 5.4.4)
