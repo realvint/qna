@@ -35,6 +35,10 @@ RSpec.describe QuestionsController do
     it "assigns a new answer to @answer" do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
+
+    it "assigns new link for answer" do
+      expect(assigns(:answer).links.first).to be_a_new(Link)
+    end
   end
 
   describe "GET #new" do

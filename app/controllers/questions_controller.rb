@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.new
     @answers = @question.answers.with_attached_files.sort_by_best
   end
 

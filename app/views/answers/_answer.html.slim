@@ -2,6 +2,12 @@
   .card.card-body.mb-3 id="answer-#{answer.id}"
     p = answer.body
 
+    .links
+      p Links:
+      ul
+        - answer.links.each do |link|
+          li = link_to link.name, link.url
+
     - if answer.files.attached?
       - answer.files.each do |file|
         p id="file-#{file.id}"
