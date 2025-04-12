@@ -39,8 +39,19 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: .node-version
+
+      - name: Install JS dependencies
+        run: npm install -g yarn && yarn install
+
       - name: Set up database
         run: bin/rails db:prepare
+
+      - name: Compile Webpacker assets
+        run: bin/rails webpacker:compile
 
       - name: Run tests
         run: bundle exec rspec
@@ -58,8 +69,7 @@ jobs:
           bundler-cache: true
 
       - name: Security audit dependencies
-        run: gem install bundler-audit && bundler-audit --update
-
+        run: gem install bundler-audit && bundler-audit --update --config .bundler-audit.yml
       - name: Security audit application code
         run: gem install brakeman && brakeman -q -w2
 
