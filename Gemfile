@@ -34,6 +34,8 @@ end
 
 group :development do
   gem "better_errors", "2.10.1"
+  gem "brakeman", "6.1.0"
+  gem "bundler-audit", "0.9.2"
   gem "listen", "3.9.0"
   gem "rack-mini-profiler", "3.3.1"
   gem "rubocop", "1.72.2"

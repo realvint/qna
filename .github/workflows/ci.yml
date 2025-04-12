@@ -69,9 +69,10 @@ jobs:
           bundler-cache: true
 
       - name: Security audit dependencies
-        run: gem install bundler-audit && bundler-audit --update --ignore CVE-2024-54133
+        run: bundle exec bundler-audit --update
+
       - name: Security audit application code
-        run: gem install brakeman && brakeman -q -w2
+        run: bundle exec brakeman -6 -q
 
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
