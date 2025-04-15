@@ -15,7 +15,10 @@
       p Links:
       ul
         - @question.links.each do |link|
-          li = link_to link.name, link.url
+          li
+            = link_to link.name, link.url, target: "_blank"
+            - if link.gist?
+              = javascript_include_tag "#{link.url}.js"
 
   h4 Answers
   .answer-errors
