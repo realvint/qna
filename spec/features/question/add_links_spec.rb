@@ -17,8 +17,10 @@ feature "User can add links to question", "
 
       visit new_question_path
 
-      fill_in "Title", with: "Test question"
-      fill_in "Body", with: "text text text"
+      within ".question-fields" do
+        fill_in "Title", with: "Test question"
+        fill_in "Body", with: "text text text"
+      end
     end
 
     scenario "link when asks question" do

@@ -25,7 +25,10 @@ feature "User can edit his question", "
       click_on "Edit"
 
       within "#question-#{question.id}" do
-        fill_in "Title", with: "Edited question"
+        within ".question-fields" do
+          fill_in "Title", with: "Edited question"
+        end
+
         click_on "Save"
 
         expect(page).to have_no_content question.title
@@ -42,7 +45,10 @@ feature "User can edit his question", "
       click_on "Edit"
 
       within "#question-#{question.id}" do
-        fill_in "Title", with: ""
+        within ".question-fields" do
+          fill_in "Title", with: ""
+        end
+
         click_on "Save"
       end
       expect(page).to have_content "Title can't be blank"

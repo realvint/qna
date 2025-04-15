@@ -50,7 +50,7 @@ class QuestionsController < ApplicationController
       :body,
       files: [],
       links_attributes: %i[id name url _destroy],
-      rewards_attributes: %i[title image]
+      reward_attributes: %i[title image]
     )
   end
 end
