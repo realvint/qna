@@ -2,11 +2,12 @@
   .card.card-body.mb-3 id="answer-#{answer.id}"
     p = answer.body
 
-    .links
-      p Links:
-      ul
-        - answer.links.each do |link|
-          li = link_to link.name, link.url
+    - if answer.links.any?
+      .links
+        p Links:
+        ul
+          - answer.links.each do |link|
+            li = link_to link.name, link.url
 
     - if answer.files.attached?
       - answer.files.each do |file|
@@ -31,9 +32,12 @@
       .mb-3
         = f.label :body, "Your answer", class: "form-label"
         = f.text_area :body, class: "form-control"
-
       .mb-3
         = f.label :files, class: "form-label"
         = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+      .my-4
+        = f.fields_for :links do |l|
+          = render "shared/link_fields", f: l
+        p = link_to_add_association "Add one more link", f, :links, partial: "shared/link_fields"
 
       = f.submit "Save", class: "btn btn-success"

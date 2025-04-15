@@ -17,5 +17,9 @@
     .mb-3
       = f.label :files, class: "form-label"
       = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+    .my-4
+      = f.fields_for :links do |l|
+        = render "shared/link_fields", f: l
+      p = link_to_add_association "Add one more link", f, :links, partial: "shared/link_fields"
 
     = f.submit "Save", class: "btn btn-success"

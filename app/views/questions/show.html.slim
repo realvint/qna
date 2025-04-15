@@ -10,11 +10,12 @@
         - if current_user&.author_of?(@question)
           = link_to "Delete file", attachment_path(file), method: :delete, remote: true
 
-  .links
-    p Links:
-    ul
-      - @question.links.each do |link|
-        li = link_to link.name, link.url
+  - if @question.links.any?
+    .links
+      p Links:
+      ul
+        - @question.links.each do |link|
+          li = link_to link.name, link.url
 
   h4 Answers
   .answer-errors

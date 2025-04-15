@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :link do
-    name { "MyString" }
-    url { "MyString" }
+    name { "My gist" }
+    url { "https://gist.github.com" }
   end
 end

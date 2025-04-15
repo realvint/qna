@@ -4,4 +4,5 @@ document.querySelector(".answer-errors").innerHTML = '<%= render "shared/errors"
   document.querySelector('.flash').innerHTML = '<%=  render "shared/flash" %>'
   document.querySelector(".answers").insertAdjacentHTML("beforeend", "<%= j render @answer %>")
   document.querySelector(".new-answer-body").value = ''
+  document.querySelectorAll('.nested-fields').forEach(el => el.remove())
 <% end %>
