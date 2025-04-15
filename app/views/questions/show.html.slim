@@ -2,6 +2,11 @@
   h3 = @question.title
   p = @question.body
 
+  - if @question.reward.present?
+    p Reward:
+    = image_tag url_for(@question.reward.image), size: "36"
+    = @question.reward.title
+
   - if @question.files.attached?
     - @question.files.each do |file|
       p id="file-#{file.id}"
