@@ -47,7 +47,7 @@ feature "Author can delete his answer", "
 
     scenario "cannot delete an answer" do
       expect(page).to have_content "My answer"
-      expect(page).to have_no_link "Delete"
+      expect(page).to have_no_link("Delete")
     end
 
     scenario "cannot delete attached file" do
@@ -60,6 +60,6 @@ feature "Author can delete his answer", "
     visit question_path(answer.question)
 
     expect(page).to have_content "My answer"
-    expect(page).to have_no_link "Delete"
+    expect(page).to have_no_link("Delete")
   end
 end

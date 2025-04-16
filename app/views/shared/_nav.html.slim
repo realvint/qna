@@ -13,6 +13,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
         - if user_signed_in?
           li = link_to current_user.email, edit_user_registration_path, class: "nav-item nav-link"
           li = link_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-item nav-link"
+          li = link_to "My rewards", rewards_path, class: "nav-item nav-link"
         - else
           li = link_to "Login", new_user_session_path, class: "nav-item nav-link"
           li = link_to "Sign up", new_user_registration_path, class: "nav-item nav-link"
