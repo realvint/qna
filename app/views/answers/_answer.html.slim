@@ -2,6 +2,8 @@
   .card.card-body.mb-3 id="answer-#{answer.id}"
     p = answer.body
 
+    .mb-4.d-flex.justify-content-end = render partial: "shared/rating", locals: { resource: answer }
+
     - if answer.links.any?
       .links
         p Links:

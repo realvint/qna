@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: :votable, defaults: { votable: "questions" }, except: %i[edit] do
-    resources :answers, shallow: true, only: %i[create update destroy] do
+    resources :answers,
+      shallow: true,
+      concerns: :votable, defaults: { votable: "answers" },
+      only: %i[create update destroy] do
       resource :best, only: :create, module: :answers, controller: "best"
     end
   end
