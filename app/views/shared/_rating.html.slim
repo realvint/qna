@@ -1,0 +1,20 @@
+.vote.d-flex.align-items-center[data-resource-id="#{resource.class.to_s.underscore}-#{resource.id}"]
+  - if current_user && !current_user.author_of?(resource)
+    = button_to send("vote_#{resource.class.to_s.underscore}_path", resource),
+      params: { value: 1 },
+      method: :post,
+      remote: true,
+      format: JSON,
+      class: "vote-btn btn btn-sm btn-outline-success"
+      | &#128077;
+
+  .rating.mx-3 = resource.rating
+
+  - if current_user && !current_user.author_of?(resource)
+    = button_to send("vote_#{resource.class.to_s.underscore}_path", resource),
+      params: { value: -1 },
+      method: :post,
+      remote: true,
+      format: JSON,
+      class: " vote-btn btn btn-sm btn-outline-secondary"
+      | &#128078;

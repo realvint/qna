@@ -9,10 +9,16 @@ module Votable
     def voting(value:, user:)
       vote = votes.find_or_initialize_by(user: user)
 
-      return if vote.value == value.to_i
-
-      vote.value += value.to_i
-      vote.save
+      if vote.persisted?
+        if vote.value == value.to_i
+          vote.destroy
+        else
+          vote.update(value: value)
+        end
+      else
+        vote.value = value
+        vote.save
+      end
     end
 
     def rating
