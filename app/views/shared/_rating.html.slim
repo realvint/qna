@@ -1,0 +1,27 @@
+.vote.d-flex.align-items-center[data-resource-id="#{resource.class.to_s.underscore}-#{resource.id}"]
+  - votable_type = resource.class.to_s.underscore
+  - votable_id = resource.id
+
+  - if current_user && !current_user.author_of?(resource)
+    = button_to votes_path,
+      params: { value: 1,
+                votable_type: votable_type,
+                votable_id: votable_id },
+      method: :post,
+      remote: true,
+      format: JSON,
+      class: "vote-up btn btn-sm btn-outline-success"
+      | &#128077;
+
+  .rating.mx-3 = resource.rating
+
+  - if current_user && !current_user.author_of?(resource)
+    = button_to votes_path,
+      params: { value: -1,
+                votable_type: votable_type,
+                votable_id: votable_id },
+      method: :post,
+      remote: true,
+      format: JSON,
+      class: "vote-down btn btn-sm btn-outline-secondary"
+      | &#128078;

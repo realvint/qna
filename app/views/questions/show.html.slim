@@ -2,6 +2,8 @@
   h3 = @question.title
   p = @question.body
 
+  .mb-4.d-flex.justify-content-end.question-votes = render partial: "shared/rating", locals: { resource: @question }
+
   - if @question.reward.present?
     p Reward:
     = image_tag url_for(@question.reward.image), size: "36"
