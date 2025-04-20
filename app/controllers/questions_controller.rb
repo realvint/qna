@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question, only: %i[show update destroy]
 
+  after_action :publish_question, only: %i[create]
+
   def index
     @questions = Question.order(created_at: :desc)
   end
@@ -52,5 +54,14 @@ class QuestionsController < ApplicationController
       links_attributes: %i[id name url _destroy],
       reward_attributes: %i[title image]
     )
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast("questions", { html: ApplicationController.render(
+      partial: "questions/question",
+      locals: { question: @question }
+    ) })
   end
 end
