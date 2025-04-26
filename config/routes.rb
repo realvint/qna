@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root to: "questions#index"
 
   resources :questions, except: %i[edit] do
-    resources :answers, shallow: true, only: %i[create update destroy] do
+    resources :answers, shallow: true, only: %i[show create update destroy] do
       resource :best, only: %i[create], module: :answers, controller: "best"
     end
   end

@@ -1,4 +1,4 @@
-.my-3
+.question.my-3 data-question-id=@question.id
   h3 = @question.title
   p = @question.body
 
@@ -32,10 +32,7 @@
     = render "shared/errors", resource: @answer
 
   .answers
-    - if @answers.empty?
-      p No answers to show.
-    - else
-      = render @answers
+    = render @answers
 
   h4 Answer a question
   = render "answers/form", answer: @answer
