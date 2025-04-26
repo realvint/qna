@@ -26,7 +26,7 @@ gem "jbuilder", "2.13.0"
 
 gem "mutex_m", "0.3.0"
 
-gem "nokogiri", "1.18.4"
+gem "nokogiri", "1.18.8"
 
 gem "pg", "1.5.9"
 gem "puma", "6.6.0"
