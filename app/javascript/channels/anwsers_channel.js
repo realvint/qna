@@ -7,7 +7,7 @@ document.addEventListener("turbolinks:load", () => {
   const questionId = question?.dataset.questionId
 
   if (questionId) {
-    consumer.subscriptions.create({ channel: "AnswersChannel", question_id: questionId }, {
+    const subscription = consumer.subscriptions.create({ channel: "AnswersChannel", question_id: questionId }, {
       received(data) {
 
         if (gon.user_id !== data.user_id) {
@@ -27,6 +27,10 @@ document.addEventListener("turbolinks:load", () => {
           )
         }
       }
+    })
+
+    window.addEventListener('beforeunload', () => {
+      subscription.unsubscribe()
     })
   }
 })

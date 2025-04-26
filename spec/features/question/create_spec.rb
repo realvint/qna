@@ -8,6 +8,7 @@ feature "User can create question", "
   I'd like to be able to ask the question
 " do
   given(:user) { create(:user) }
+  given(:other_user) { create(:user) }
 
   describe "Authenticated user" do
     background do
@@ -60,6 +61,8 @@ feature "User can create question", "
       end
 
       Capybara.using_session("guest") do
+        sign_in(other_user)
+
         visit questions_path
       end
 
