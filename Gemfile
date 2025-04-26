@@ -20,6 +20,8 @@ gem "devise", "4.9.4"
 gem "devise-i18n", "1.13.0"
 gem "drb", "2.2.1"
 
+gem "gon", "6.4.0"
+
 gem "jbuilder", "2.13.0"
 
 gem "mutex_m", "0.3.0"
