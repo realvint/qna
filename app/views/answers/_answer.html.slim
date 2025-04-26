@@ -10,7 +10,8 @@
         ul
           - answer.links.each do |link|
             li
-              = link_to link.name, link.url, target: "_blank", rel: "noopener noreferrer"
+              = link_to ERB::Util.html_escape(link.name),
+                ERB::Util.html_escape(link.url), target: "_blank", rel: "noopener noreferrer"
               - if link.gist?
                 = javascript_include_tag "#{link.url}.js"
 
