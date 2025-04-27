@@ -41,7 +41,7 @@
       - if user_signed_in?
         div
           = link_to "Add comment", "#", class: "add-comment-link"
-          = render 'comments/form', commentable: answer
+          = render "comments/form", commentable: answer
 
     = form_with model: answer, local: false, class: "hidden", html: { id: "edit-answer-#{answer.id}" } do |f|
       .mb-3
