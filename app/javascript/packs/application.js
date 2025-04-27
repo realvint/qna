@@ -16,6 +16,7 @@ import "stylesheets/application"
 import "./answer"
 import "./question"
 import "./vote"
+import "./comment"
 
 Rails.start()
 Turbolinks.start()

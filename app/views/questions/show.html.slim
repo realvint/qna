@@ -28,6 +28,15 @@
             - if link.gist?
               = javascript_include_tag "#{link.url}.js"
 
+  div id="question-#{@question.id}-comments"
+    p Comments:
+    ul
+      = render @question.comments
+    - if user_signed_in?
+      .mb-4
+        = link_to "Add comment", "#", class: "add-comment-link"
+        = render "comments/form", commentable: @question
+
   h4 Answers
   .answer-errors
     = render "shared/errors", resource: @answer
