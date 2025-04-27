@@ -1,0 +1,15 @@
+<% if @comment.persisted? %>
+  var form = document.querySelector("#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments form")
+  if (form) form.style.display = "none"
+
+  var commentsList = document.querySelector("#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments ul")
+  var tempDiv = document.createElement("div")
+  tempDiv.innerHTML = "<%= j render @comment %>"
+  commentsList.appendChild(tempDiv.firstElementChild)
+
+  var addCommentLink = document.querySelector("#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments a.add-comment-link")
+  if (addCommentLink) addCommentLink.style.display = "block"
+<% else %>
+  document.querySelector("#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments .comment-errors")
+    .innerHTML = '<%= render "shared/errors", resource: @comment %>'
+<% end %>

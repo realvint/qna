@@ -8,6 +8,7 @@ feature "Authenticated user can answer a question", "
   I'd like to be able to answer the question
 " do
   given(:user) { create(:user) }
+  given(:other_user) { create(:user) }
   given(:question) { create(:question) }
 
   describe "Authenticated user", :js do
@@ -39,6 +40,32 @@ feature "Authenticated user can answer a question", "
 
       expect(page).to have_link "rails_helper.rb"
       expect(page).to have_link "spec_helper.rb"
+    end
+  end
+
+  context "multiple sessions", :js do
+    scenario "answer appears on another user's page" do
+      Capybara.using_session("user") do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session("guest") do
+        sign_in(other_user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session("user") do
+        fill_in "Body", with: "My new answer"
+        click_on "Answer"
+
+        expect(page).to have_content "Your answer successfully created."
+        expect(page).to have_content "My new answer"
+      end
+
+      Capybara.using_session("guest") do
+        expect(page).to have_content "My new answer"
+      end
     end
   end
 

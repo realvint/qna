@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root to: "questions#index"
 
   resources :questions, except: %i[edit] do
-    resources :answers, shallow: true, only: %i[create update destroy] do
+    resources :answers, shallow: true, only: %i[show create update destroy] do
       resource :best, only: %i[create], module: :answers, controller: "best"
     end
   end
@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   resources :attachments, only: %i[destroy]
   resources :rewards, only: %i[index]
   resources :votes, only: %i[create]
+  resources :comments, only: %i[create]
+
+  mount ActionCable.server => "/cable"
 end

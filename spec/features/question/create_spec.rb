@@ -8,6 +8,7 @@ feature "User can create question", "
   I'd like to be able to ask the question
 " do
   given(:user) { create(:user) }
+  given(:other_user) { create(:user) }
 
   describe "Authenticated user" do
     background do
@@ -39,7 +40,7 @@ feature "User can create question", "
     scenario "asks a question with attached files" do
       within ".question-fields" do
         fill_in "Title", with: "Test question"
-        fill_in "Body", with: "text text text"
+        fill_in "Body", with: "Test body"
       end
 
       attach_file "File", %W[#{Rails.root.join("spec/rails_helper.rb")} #{Rails.root.join("spec/spec_helper.rb")}]
@@ -47,6 +48,39 @@ feature "User can create question", "
 
       expect(page).to have_link "rails_helper.rb"
       expect(page).to have_link "spec_helper.rb"
+    end
+  end
+
+  context "multiple sessions" do
+    scenario "question appears on another user's page" do
+      Capybara.using_session("user") do
+        sign_in(user)
+
+        visit questions_path
+        click_on "Ask question"
+      end
+
+      Capybara.using_session("guest") do
+        sign_in(other_user)
+
+        visit questions_path
+      end
+
+      Capybara.using_session("user") do
+        within ".question-fields" do
+          fill_in "Title", with: "Test question"
+          fill_in "Body", with: "Test body"
+        end
+        click_on "Ask"
+
+        expect(page).to have_content "Your question successfully created."
+        expect(page).to have_content "Test question"
+        expect(page).to have_content "Test body"
+      end
+
+      Capybara.using_session("guest") do
+        expect(page).to have_content "Test question"
+      end
     end
   end
 

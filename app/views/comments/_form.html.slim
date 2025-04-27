@@ -1,0 +1,9 @@
+= form_with model: Comment.new, class: "comment-form hidden", local: false do |f|
+  .comment-errors
+  .mb-4
+    = f.label :body, class: "form-label"
+    = f.text_area :body, class: "form-control new-comment-body"
+  = f.submit "Add comment", class: "btn btn-success width-10"
+
+  = hidden_field_tag :commentable_type, commentable.class
+  = hidden_field_tag :commentable_id, commentable.id

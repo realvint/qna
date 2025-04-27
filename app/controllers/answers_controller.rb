@@ -2,7 +2,13 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_answer, only: %i[update destroy]
+  before_action :set_answer, only: %i[show update destroy]
+
+  after_action :publish_answer, only: %i[create]
+
+  def show
+    render partial: "answers/answer", locals: { answer: @answer, current_user: current_user }
+  end
 
   def create
     @question = Question.find(params[:question_id])
@@ -33,6 +39,19 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [], links_attributes: %i[id name url _destroy])
+    params.require(:answer).permit(
+      :body,
+      files: [],
+      links_attributes: %i[id name url _destroy]
+    )
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "questions/#{@question.id}/answers",
+      { user_id: current_user.id, question_id: @question.id, answer_id: @answer.id }
+    )
   end
 end

@@ -31,10 +31,10 @@ class VotesController < ApplicationController
 
     return render json: { error: "Invalid votable type" }, status: :unprocessable_entity unless klass
 
-    @resource = klass.find_by(id: params["#{votable_type.singularize}_id"])
+    @resource = klass.find_by(id: params[:votable_id])
 
     return if @resource
 
-    render json: { error: "#{klass} with id #{votable_id} not found" }, status: :not_found
+    render json: { error: "#{klass} with id #{params[:votable_id]} not found" }, status: :not_found
   end
 end

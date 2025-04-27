@@ -1,4 +1,4 @@
-.my-3
+.question.my-3 data-question-id=@question.id
   h3 = @question.title
   p = @question.body
 
@@ -23,19 +23,26 @@
       ul
         - @question.links.each do |link|
           li
-            = link_to link.name, link.url, target: "_blank", rel: "noopener noreferrer"
+            = link_to ERB::Util.html_escape(link.name),
+              ERB::Util.html_escape(link.url), target: "_blank", rel: "noopener noreferrer"
             - if link.gist?
               = javascript_include_tag "#{link.url}.js"
+
+  div id="question-#{@question.id}-comments"
+    p Comments:
+    ul
+      = render @question.comments
+    - if user_signed_in?
+      .mb-4
+        = link_to "Add comment", "#", class: "add-comment-link"
+        = render "comments/form", commentable: @question
 
   h4 Answers
   .answer-errors
     = render "shared/errors", resource: @answer
 
   .answers
-    - if @answers.empty?
-      p No answers to show.
-    - else
-      = render @answers
+    = render @answers
 
   h4 Answer a question
   = render "answers/form", answer: @answer

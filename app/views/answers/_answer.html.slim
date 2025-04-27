@@ -10,7 +10,8 @@
         ul
           - answer.links.each do |link|
             li
-              = link_to link.name, link.url, target: "_blank", rel: "noopener noreferrer"
+              = link_to ERB::Util.html_escape(link.name),
+                ERB::Util.html_escape(link.url), target: "_blank", rel: "noopener noreferrer"
               - if link.gist?
                 = javascript_include_tag "#{link.url}.js"
 
@@ -32,6 +33,15 @@
       p
         => link_to "Edit", "#", class: "edit-answer-link", data: { answer_id: answer.id }
         = link_to "Delete", answer, method: :delete, remote: true, data: { confirm: "Are you sure?" }
+
+    div id="answer-#{answer.id}-comments"
+      p Comments:
+      ul
+        = render answer.comments
+      - if user_signed_in?
+        div
+          = link_to "Add comment", "#", class: "add-comment-link"
+          = render "comments/form", commentable: answer
 
     = form_with model: answer, local: false, class: "hidden", html: { id: "edit-answer-#{answer.id}" } do |f|
       .mb-3

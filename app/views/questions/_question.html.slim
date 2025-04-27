@@ -2,7 +2,7 @@
   .d-flex.justify-content-between
     = link_to question.title, question
 
-    - if current_user&.author_of?(question)
+    - if local_assigns[:current_user]&.author_of?(question)
       div
         => link_to "Edit", "#", class: "edit-question-link", data: { question_id: question.id }
         = link_to "Delete", question, method: :delete, remote: true, data: { confirm: "Are you sure?" }
