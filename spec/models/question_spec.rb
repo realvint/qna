@@ -19,4 +19,5 @@ RSpec.describe Question do
   it { is_expected.to accept_nested_attributes_for :reward }
 
   it_behaves_like "votable"
+  it_behaves_like "commentable"
 end
